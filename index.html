@@ -35,12 +35,11 @@
         align-items: center;
         padding: 16px;
         background: #faf3ec;
-        /* KREM CERAH - TIDAK PUDAR */
         position: relative;
         overflow-x: hidden;
       }
 
-      /* ===== BACKGROUND GRADIENT HALUS ===== */
+      /* ===== BACKGROUND GRADIENT ===== */
       body::before {
         content: "";
         position: fixed;
@@ -66,7 +65,7 @@
       }
 
       /* ============================================================
-           PARTICLE EFFECT (WARNA EMAS LEBIH TERANG)
+           PARTICLE EFFECT
         ============================================================ */
       .particle-container {
         position: fixed;
@@ -81,7 +80,6 @@
         width: 6px;
         height: 6px;
         background: rgba(212, 168, 67, 0.2);
-        /* emas lebih terang */
         border-radius: 50%;
         animation: floatParticle linear infinite;
       }
@@ -217,7 +215,6 @@
       .overlay .ornament {
         font-size: 32px;
         color: #d4a843;
-        /* EMAS BERKILAU */
         letter-spacing: 18px;
         font-weight: 300;
         margin-bottom: 12px;
@@ -254,7 +251,6 @@
         font-size: 13px;
         font-weight: 300;
         color: #6b5340;
-        /* COKLAT HANGAT */
         letter-spacing: 5px;
         margin-top: 10px;
         animation: blinkText 1.8s ease-in-out infinite;
@@ -274,7 +270,6 @@
         width: 60px;
         height: 1px;
         background: #c9a84c;
-        /* EMAS MEDIUM */
         margin: 16px auto 0;
       }
 
@@ -317,7 +312,7 @@
         }
       }
 
-      /* ===== BORDER EMAS BERKILAU ===== */
+      /* ===== BORDER EMAS ===== */
       .card::before {
         content: "";
         position: absolute;
@@ -483,6 +478,50 @@
         object-fit: contain;
         display: block;
         background: #faf3ec;
+      }
+
+      /* ============================================================
+           DOA / UCAPAN HARAPAN (BARU)
+        ============================================================ */
+      .doa-section {
+        background: rgba(250, 243, 236, 0.5);
+        border-radius: 14px;
+        padding: 16px 14px;
+        margin: 10px 0 12px;
+        border: 1px solid rgba(212, 168, 67, 0.12);
+        animation: doaPulse 4s ease-in-out infinite;
+      }
+
+      @keyframes doaPulse {
+        0%,
+        100% {
+          background: rgba(250, 243, 236, 0.5);
+        }
+        50% {
+          background: rgba(250, 243, 236, 0.8);
+        }
+      }
+
+      .doa-icon {
+        font-size: 28px;
+        margin-bottom: 6px;
+      }
+
+      .doa-text {
+        font-family: "Playfair Display", serif;
+        font-size: 15px;
+        font-style: italic;
+        color: #2d1f14;
+        line-height: 1.8;
+        font-weight: 400;
+      }
+
+      .doa-source {
+        font-size: 11px;
+        color: #6b5340;
+        font-weight: 300;
+        letter-spacing: 1px;
+        margin-top: 6px;
       }
 
       /* ============================================================
@@ -720,6 +759,9 @@
         .overlay .icon-main {
           font-size: 48px;
         }
+        .doa-text {
+          font-size: 14px;
+        }
       }
 
       @media (max-width: 380px) {
@@ -731,6 +773,9 @@
         }
         .counter-item .number {
           font-size: 16px;
+        }
+        .doa-text {
+          font-size: 13px;
         }
       }
     </style>
@@ -804,6 +849,20 @@
         />
       </div>
 
+      <!-- ============================================================
+        DOA / UCAPAN HARAPAN (BARU)
+        ============================================================ -->
+      <div class="doa-section">
+        <div class="doa-icon">🤲</div>
+        <p class="doa-text">
+          "Ya Allah, terimalah ibadah khitan ini,<br />
+          jadikanlah putra kami Muhamad Idris Jaelaniy<br />
+          anak yang sholeh, berbakti kepada orang tua,<br />
+          dan bermanfaat bagi agama, nusa, dan bangsa."
+        </p>
+        <p class="doa-source">— Doa dari keluarga besar</p>
+      </div>
+
       <!-- ===== COUNTER ===== -->
       <div class="counter-section">
         <div class="label-counter">⏳ Menuju Hari Bahagia</div>
@@ -843,7 +902,7 @@
         </p>
         <p>
           <span class="icon">🕐</span> <span class="label">Waktu</span><br />
-          09.00 WIB s/d selesai
+          09.00 – 11.00 WIB
         </p>
         <p>
           <span class="icon">📍</span> <span class="label">Tempat</span><br />
@@ -958,7 +1017,7 @@
       function konfirmasiKehadiran() {
         const pesan =
           "Assalamu'alaikum, saya ingin mengonfirmasi kehadiran untuk acara khitanan Muhamad Idris Jaelaniy.";
-        const noWa = "6281573749593";
+        const noWa = "6281234567890";
         window.open(
           `https://wa.me/${noWa}?text=${encodeURIComponent(pesan)}`,
           "_blank",
