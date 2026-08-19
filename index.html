@@ -403,6 +403,21 @@
         margin-top: -2px;
       }
 
+      /* ===== NAMA TAMU (DARI PARAMETER URL) ===== */
+      .guest-name {
+        font-family: "Playfair Display", serif;
+        font-size: 18px;
+        font-style: italic;
+        color: #6b5340;
+        margin: 6px 0 10px;
+        padding: 8px 12px;
+        background: rgba(250, 243, 236, 0.4);
+        border-radius: 12px;
+        border: 1px solid rgba(212, 168, 67, 0.1);
+        min-height: 40px;
+        line-height: 1.5;
+      }
+
       /* ===== NAMA DENGAN TYPING EFFECT ===== */
       .child-name {
         font-family: "Playfair Display", serif;
@@ -832,6 +847,11 @@
         .sub-title {
           font-size: 16px;
         }
+        .guest-name {
+          font-size: 16px;
+          padding: 6px 10px;
+          min-height: 34px;
+        }
         .counter-item .number {
           font-size: 20px;
         }
@@ -882,6 +902,10 @@
         }
         .child-name .cursor {
           height: 20px;
+        }
+        .guest-name {
+          font-size: 14px;
+          min-height: 30px;
         }
         .counter-item .number {
           font-size: 16px;
@@ -939,6 +963,9 @@
       <!-- ===== JUDUL ===== -->
       <div class="title">Walimatul Khitan</div>
       <div class="sub-title">— Undangan —</div>
+
+      <!-- ===== NAMA TAMU (DARI PARAMETER URL) ===== -->
+      <div class="guest-name" id="guestName"></div>
 
       <!-- ===== NAMA DENGAN TYPING EFFECT ===== -->
       <div class="child-name">
@@ -1311,6 +1338,30 @@
           "_blank",
         );
       }
+
+      // =============================================
+      // 6. BACA NAMA TAMU DARI PARAMETER URL
+      // =============================================
+      function getNamaTamu() {
+        const urlParams = new URLSearchParams(window.location.search);
+        let nama = urlParams.get("nama");
+        const guestNameEl = document.getElementById("guestName");
+
+        if (nama) {
+          nama = decodeURIComponent(nama);
+          guestNameEl.innerHTML = `
+            <span style="font-size:14px; font-weight:300; color:#8a7a6a;">Kepada Yth.</span><br />
+            ${nama}
+          `;
+        } else {
+          guestNameEl.innerHTML = `
+            <span style="font-size:13px; font-weight:300; color:#b4a492;">Kepada Yth. Bapak/Ibu/Saudara/i</span>
+          `;
+        }
+      }
+
+      // Jalankan setelah halaman load
+      getNamaTamu();
     </script>
   </body>
 </html>
