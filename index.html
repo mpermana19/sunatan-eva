@@ -403,6 +403,7 @@
         margin-top: -2px;
       }
 
+      /* ===== NAMA DENGAN TYPING EFFECT ===== */
       .child-name {
         font-family: "Playfair Display", serif;
         font-size: 28px;
@@ -411,11 +412,40 @@
         margin: 10px 0 2px;
         letter-spacing: 1px;
         line-height: 1.2;
+        min-height: 60px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
       }
 
-      .child-name span {
+      .child-name .typing-text {
+        display: inline;
+      }
+
+      .child-name .typing-text span {
         color: #d4a843;
         font-weight: 300;
+      }
+
+      .child-name .cursor {
+        display: inline-block;
+        width: 2px;
+        height: 32px;
+        background: #d4a843;
+        margin-left: 2px;
+        animation: blinkCursor 0.8s step-end infinite;
+        vertical-align: text-bottom;
+      }
+
+      @keyframes blinkCursor {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0;
+        }
       }
 
       .child-parent {
@@ -446,33 +476,37 @@
       }
 
       /* ============================================================
-           FOTO
+           GALERI FOTO (SLIDER)
         ============================================================ */
-      .photo-wrapper {
+      .gallery-wrapper {
+        position: relative;
         width: 100%;
         border-radius: 16px;
         overflow: hidden;
-        margin: 4px 0 14px;
+        margin: 4px 0 10px;
         box-shadow: 0 8px 30px rgba(61, 43, 31, 0.08);
         aspect-ratio: 4 / 3;
         background: #faf3ec;
-        position: relative;
-        animation: photoPulse 4s ease-in-out infinite;
       }
 
-      @keyframes photoPulse {
-        0%,
-        100% {
-          transform: scale(1);
-          opacity: 1;
-        }
-        50% {
-          transform: scale(1.01);
-          opacity: 0.95;
-        }
+      .gallery-slider {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        will-change: transform;
       }
 
-      .photo-wrapper img {
+      .gallery-slide {
+        min-width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #faf3ec;
+      }
+
+      .gallery-slide img {
         width: 100%;
         height: 100%;
         object-fit: contain;
@@ -480,8 +514,73 @@
         background: #faf3ec;
       }
 
+      .gallery-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        border: 1px solid rgba(212, 168, 67, 0.3);
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(4px);
+        color: #2d1f14;
+        font-size: 14px;
+        cursor: pointer;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      }
+
+      .gallery-btn:hover {
+        background: #ffffff;
+        border-color: #d4a843;
+        transform: translateY(-50%) scale(1.05);
+      }
+
+      .gallery-btn:active {
+        transform: translateY(-50%) scale(0.92);
+      }
+
+      .gallery-btn.prev {
+        left: 8px;
+      }
+
+      .gallery-btn.next {
+        right: 8px;
+      }
+
+      .gallery-dots {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 10px;
+        padding-bottom: 2px;
+      }
+
+      .gallery-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #d4b8a0;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        padding: 0;
+      }
+
+      .gallery-dot.active {
+        background: #d4a843;
+        transform: scale(1.2);
+        width: 20px;
+        border-radius: 4px;
+      }
+
       /* ============================================================
-           DOA / UCAPAN HARAPAN (BARU)
+           DOA / UCAPAN HARAPAN
         ============================================================ */
       .doa-section {
         background: rgba(250, 243, 236, 0.5);
@@ -725,6 +824,10 @@
         }
         .child-name {
           font-size: 22px;
+          min-height: 50px;
+        }
+        .child-name .cursor {
+          height: 24px;
         }
         .sub-title {
           font-size: 16px;
@@ -762,6 +865,11 @@
         .doa-text {
           font-size: 14px;
         }
+        .gallery-btn {
+          width: 28px;
+          height: 28px;
+          font-size: 12px;
+        }
       }
 
       @media (max-width: 380px) {
@@ -770,6 +878,10 @@
         }
         .child-name {
           font-size: 18px;
+          min-height: 40px;
+        }
+        .child-name .cursor {
+          height: 20px;
         }
         .counter-item .number {
           font-size: 16px;
@@ -828,9 +940,10 @@
       <div class="title">Walimatul Khitan</div>
       <div class="sub-title">— Undangan —</div>
 
-      <!-- ===== NAMA ===== -->
+      <!-- ===== NAMA DENGAN TYPING EFFECT ===== -->
       <div class="child-name">
-        Muhamad <span>·</span> Idris <span>·</span> Jaelaniy
+        <span class="typing-text" id="typingName"></span>
+        <span class="cursor" id="cursor"></span>
       </div>
       <div class="child-parent">Putra dari Bapak Ridi &amp; Ibu Eva</div>
 
@@ -841,16 +954,68 @@
         <span class="divider-line"></span>
       </div>
 
-      <!-- ===== FOTO ===== -->
-      <div class="photo-wrapper">
-        <img
-          src="https://raw.githubusercontent.com/mpermana19/sunatan-eva/main/1.png"
-          alt="Foto Anak"
-        />
+      <!-- ============================================================
+        GALERI FOTO (SLIDER)
+        ============================================================ -->
+      <div class="gallery-wrapper">
+        <div class="gallery-slider" id="gallerySlider">
+          <div class="gallery-slide">
+            <img
+              src="https://raw.githubusercontent.com/mpermana19/sunatan-eva/main/1.png"
+              alt="Foto 1"
+            />
+          </div>
+          <div class="gallery-slide">
+            <img
+              src="https://raw.githubusercontent.com/mpermana19/sunatan-eva/main/2.jpg"
+              alt="Foto 2"
+            />
+          </div>
+          <div class="gallery-slide">
+            <img
+              src="https://raw.githubusercontent.com/mpermana19/sunatan-eva/main/revisi.png"
+              alt="Foto 3"
+            />
+          </div>
+          <div class="gallery-slide">
+            <img
+              src="https://raw.githubusercontent.com/mpermana19/sunatan-eva/main/4.jpg"
+              alt="Foto 4"
+            />
+          </div>
+        </div>
+
+        <!-- Tombol Panah -->
+        <button class="gallery-btn prev" onclick="moveSlide(-1)">‹</button>
+        <button class="gallery-btn next" onclick="moveSlide(1)">›</button>
+      </div>
+
+      <!-- Indicator Dot -->
+      <div class="gallery-dots" id="galleryDots">
+        <button
+          class="gallery-dot active"
+          data-index="0"
+          onclick="goToSlide(0)"
+        ></button>
+        <button
+          class="gallery-dot"
+          data-index="1"
+          onclick="goToSlide(1)"
+        ></button>
+        <button
+          class="gallery-dot"
+          data-index="2"
+          onclick="goToSlide(2)"
+        ></button>
+        <button
+          class="gallery-dot"
+          data-index="3"
+          onclick="goToSlide(3)"
+        ></button>
       </div>
 
       <!-- ============================================================
-        DOA / UCAPAN HARAPAN (BARU)
+        DOA / UCAPAN HARAPAN
         ============================================================ -->
       <div class="doa-section">
         <div class="doa-icon">🤲</div>
@@ -950,7 +1115,9 @@
 
         setTimeout(() => {
           card.classList.add("visible");
-        }, 150);
+          // Jalankan typing effect setelah kartu muncul
+          startTypingLoop();
+        }, 300);
 
         if (audio.paused) {
           btn.textContent = "♩";
@@ -978,7 +1145,128 @@
       }
 
       // =============================================
-      // 2. TIMER (26 AGUSTUS 2026)
+      // 2. TYPING EFFECT LOOPING (MAJU + MUNDUR)
+      // =============================================
+      const name = "Muhamad · Idris · Jaelaniy";
+      const typingElement = document.getElementById("typingName");
+      const cursor = document.getElementById("cursor");
+      let index = 0;
+      let isDeleting = false;
+      let typingTimeout;
+
+      function startTypingLoop() {
+        // Clear dulu
+        typingElement.innerHTML = "";
+        index = 0;
+        isDeleting = false;
+        typeNextChar();
+      }
+
+      function typeNextChar() {
+        const fullText = name;
+
+        if (!isDeleting) {
+          // ===== MODE MENGETIK (MAJU) =====
+          if (index < fullText.length) {
+            typingElement.innerHTML += fullText.charAt(index);
+            index++;
+            typingTimeout = setTimeout(typeNextChar, 100); // kecepatan ngetik
+          } else {
+            // Selesai mengetik, tunggu 2 detik lalu mulai hapus
+            cursor.style.animation = "blinkCursor 0.8s step-end infinite";
+            typingTimeout = setTimeout(() => {
+              isDeleting = true;
+              typeNextChar();
+            }, 2000);
+          }
+        } else {
+          // ===== MODE MENGHAPUS (MUNDUR) =====
+          if (index > 0) {
+            const currentText = typingElement.innerHTML;
+            typingElement.innerHTML = currentText.slice(0, -1);
+            index--;
+            typingTimeout = setTimeout(typeNextChar, 50); // kecepatan hapus (lebih cepat)
+          } else {
+            // Selesai menghapus, tunggu 1 detik lalu mulai ngetik lagi
+            cursor.style.animation = "blinkCursor 0.8s step-end infinite";
+            typingTimeout = setTimeout(() => {
+              isDeleting = false;
+              typeNextChar();
+            }, 1000);
+          }
+        }
+      }
+
+      // =============================================
+      // 3. GALERI FOTO (SLIDER)
+      // =============================================
+      let currentSlide = 0;
+      const totalSlides = 4;
+      const slider = document.getElementById("gallerySlider");
+      const dots = document.querySelectorAll(".gallery-dot");
+      let autoSlideInterval;
+
+      function updateSlide(index) {
+        if (index < 0) index = totalSlides - 1;
+        if (index >= totalSlides) index = 0;
+        currentSlide = index;
+        slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+
+        dots.forEach((dot, i) => {
+          dot.classList.toggle("active", i === currentSlide);
+        });
+      }
+
+      function moveSlide(direction) {
+        updateSlide(currentSlide + direction);
+        resetAutoSlide();
+      }
+
+      function goToSlide(index) {
+        updateSlide(index);
+        resetAutoSlide();
+      }
+
+      function startAutoSlide() {
+        autoSlideInterval = setInterval(() => {
+          updateSlide(currentSlide + 1);
+        }, 4000);
+      }
+
+      function resetAutoSlide() {
+        clearInterval(autoSlideInterval);
+        startAutoSlide();
+      }
+
+      // Touch support
+      let touchStartX = 0;
+      let touchEndX = 0;
+
+      slider.addEventListener(
+        "touchstart",
+        (e) => {
+          touchStartX = e.changedTouches[0].screenX;
+        },
+        { passive: true },
+      );
+
+      slider.addEventListener(
+        "touchend",
+        (e) => {
+          touchEndX = e.changedTouches[0].screenX;
+          const diff = touchStartX - touchEndX;
+          if (Math.abs(diff) > 40) {
+            if (diff > 0) moveSlide(1);
+            else moveSlide(-1);
+          }
+        },
+        { passive: true },
+      );
+
+      startAutoSlide();
+
+      // =============================================
+      // 4. TIMER (26 AGUSTUS 2026)
       // =============================================
       const targetDate = new Date(2026, 7, 26, 9, 0, 0).getTime();
 
@@ -1012,12 +1300,12 @@
       setInterval(updateCounter, 1000);
 
       // =============================================
-      // 3. RSVP
+      // 5. RSVP
       // =============================================
       function konfirmasiKehadiran() {
         const pesan =
           "Assalamu'alaikum, saya ingin mengonfirmasi kehadiran untuk acara khitanan Muhamad Idris Jaelaniy.";
-        const noWa = "6281234567890";
+        const noWa = "6281573749593";
         window.open(
           `https://wa.me/${noWa}?text=${encodeURIComponent(pesan)}`,
           "_blank",
